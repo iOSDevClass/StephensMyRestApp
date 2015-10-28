@@ -221,6 +221,9 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
     // What if ApiManager simply 'forgets' its auth token?
     
     // What do you think this method should really do?
+    
+    self.authToken = nil;
+    
 }
 
 @end
