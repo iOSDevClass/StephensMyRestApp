@@ -110,8 +110,8 @@
 			children = (
 				8116BB371BDA90CB000C267B /* AuthenticateViewController.h */,
 				8116BB381BDA90CB000C267B /* AuthenticateViewController.m */,
-				8116BB341BD9AF98000C267B /* RegisterUserViewController.h */,
 				8116BB351BD9AF98000C267B /* RegisterUserViewController.m */,
+				8116BB341BD9AF98000C267B /* RegisterUserViewController.h */,
 				8116BB3A1BDA982D000C267B /* AllUsersViewController.h */,
 				8116BB3B1BDA982D000C267B /* AllUsersViewController.m */,
 				8116BB4B1BDAD67F000C267B /* UserDetailViewController.h */,

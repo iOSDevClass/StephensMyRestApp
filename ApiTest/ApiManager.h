@@ -11,7 +11,7 @@
 
 @interface ApiManager : NSObject
 
-@property (nonatomic) BOOL isAuthenticated;
+@property (readonly, nonatomic) BOOL isAuthenticated;
 
 + (instancetype)getInstance;
 

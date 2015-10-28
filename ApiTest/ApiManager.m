@@ -115,7 +115,46 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
 
 #pragma mark CHALLENGE #2 - with a partner
 - (void)authenticateUser:(NSString *)username withPassword:(NSString *)password completion:(void (^)(NSString *))completion failure:(void (^)(void))failure {
+    // start talking to the server
+    NSURLSession *urlSession = [NSURLSession sharedSession];
     
+    // make a request object - NSMutableURLRequest
+    NSString *urlString = [NSString stringWithFormat:@"http://104.236.231.254:5000/auth?username=%@&password=%@",username, password];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    // populate the request with the information from documentation
+    request.HTTPMethod = @"POST";
+    
+    // tell server what type of information to expect; talk to me in this language and say it explicitly in the content type
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    //actually pass the info to the server?; everything is ready, but we havn't left yet; dataTaskWithRequest actually sends to the server;
+    NSURLSessionDataTask *dataTask = [urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error)
+        {
+            NSLog(@"There was an error with response %ld", (long) ((NSHTTPURLResponse *) response).statusCode);
+        }
+        else
+        {
+            NSLog(@"Success with response %ld", (long) ((NSHTTPURLResponse *) response).statusCode);
+            if (((NSHTTPURLResponse *)response).statusCode == 200) {
+                //the auth token appears somehow in data
+                NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                //get NSString with auth token from NSData
+                completion(authToken);
+                [self setAuthToken: authToken];
+            }
+            else
+            {
+                failure();
+            }
+        }
+    }];
+    
+    [dataTask resume];
+    
+    //what needs to happen next?
 }
 
 #pragma mark CHALLENGE #3 - with a partner or on your own
