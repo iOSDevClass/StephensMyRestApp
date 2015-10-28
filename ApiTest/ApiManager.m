@@ -57,7 +57,8 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
 }
 
 #pragma mark CHALLENGE #1 - let's do this together with a projector
-- (void)registerNewUsername:(NSString *)username withPassword:(NSString *)password completion:(void (^)(NSString *))completion failure:(void (^)(void))failure {
+- (void)registerNewUsername:(NSString *)username withPassword:(NSString *)password completion:(void (^)(NSString *))completion failure:(void (^)(void))failure
+    {
    // start talking to the server
     NSURLSession *urlSession = [NSURLSession sharedSession];
     
@@ -72,14 +73,20 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
     NSMutableDictionary *userDataDictionary = [[NSMutableDictionary alloc]init];
     [userDataDictionary setObject:username forKey:@"username"];
     [userDataDictionary setObject:password forKey:@"password"];
+    
+    //create a pointer that points to the error class
     NSError *error;
+        
+    //final packing of the basket inside the house
     NSData *dataToPass = [NSJSONSerialization dataWithJSONObject:userDataDictionary options:0 error:&error];
+
+    //put the basket into the car
     request.HTTPBody = dataToPass;
     
-    // tell server what type of information to expect
+    // tell server what type of information to expect; talk to me in this language and say it explicitly in the content type
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    //actually pass the info to the server?
+    //actually pass the info to the server?; everything is ready, but we havn't left yet; dataTaskWithRequest actually sends to the server;
     NSURLSessionDataTask *dataTask = [urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error)
         {
@@ -102,7 +109,6 @@ NSString *SERVER_API_BASE_URL = @"http://localhost:5000";
     }];
     
     [dataTask resume];
-    
     
     //what needs to happen next?
 }
